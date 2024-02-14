@@ -33,7 +33,7 @@ const registerHandler = async( req , res) =>{
 const loginHandler = async(req , res)=>{
     try{
         const {buisnessEmail, password} = req.body;
-        const isUser = User.findOne({buisnessEmail});
+        const isUser = await User.findOne({buisnessEmail});
 
         if(buisnessEmail !== '' && password !== ''){
             if(isUser){
@@ -56,7 +56,7 @@ const loginHandler = async(req , res)=>{
     }
     catch(error){
         console.log(error);
-        res.json({message:'Internal server error'})
+        res.json({message:'Internal server gagar'})
     }
 }
 
