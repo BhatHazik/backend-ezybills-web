@@ -2,8 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const registerHandler = require('./controllers/handllers');
-const loginHandler = require('./controllers/handllers');
+const {registerHandler, loginHandler} = require('./controllers/handllers')
 
 
 const app = express();
@@ -18,7 +17,7 @@ app.use(cors());
 
 try{
     const mongoConnect = mongoose.connect(url);
-    if(connect){
+    if(mongoConnect){
         console.log('dataBase is connected successfully');
     }
     else{

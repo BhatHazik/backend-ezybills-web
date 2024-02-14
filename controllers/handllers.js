@@ -4,12 +4,14 @@ const registerHandler = async( req , res) =>{
     try{
         const {buisnessName, buisnessEmail, password} = req.body;
 
-         const ExistingUser = User.findOne({buisnessEmail});
+         
+          const ExistingUser = await User.findOne({buisnessEmail});
 
-         if(buisnessName ==! '' && buisnessEmail ==! '' && password ==! ''){
+         if(buisnessName !== "" && buisnessEmail !== "" && password !== ""){
+            
             if(!ExistingUser){
                 const securePassword = await bcrypt.hash(password , 10);
-                const NewUser = new User({buisnessName, buisnessEmail, password});
+                const NewUser = new User({buisnessName, buisnessEmail, password: securePassword});
                 await NewUser.save();
                 res.json({message:'User created success'});
             }
@@ -33,10 +35,11 @@ const loginHandler = async(req , res)=>{
         const {buisnessEmail, password} = req.body;
         const isUser = User.findOne({buisnessEmail});
 
-        if(buisnessEmail ==! '' && password ==! ''){
+        if(buisnessEmail !== '' && password !== ''){
             if(isUser){
                 const comparePassword = await bcrypt.compare(password , isUser.password);
                 if(comparePassword){
+                    
                     res.json({message:'Login success'});
                 }
                 else{
@@ -60,4 +63,5 @@ const loginHandler = async(req , res)=>{
 
 
 
-module.exports = registerHandler, loginHandler;
+module.exports = {registerHandler,
+                  loginHandler};
